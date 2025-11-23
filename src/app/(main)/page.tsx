@@ -1,22 +1,24 @@
 import CouponCode from "@/components/Homepage/CouponCode";
 import FeaturedNews from "@/components/Homepage/FeaturedNews";
-import InfoCards from "@/components/Homepage/InfoCards";
 import LatestAITools from "@/components/Homepage/LatestAITools";
 import MainPage from "@/components/Homepage/MainPage";
 import NewsletterSection from "@/components/Homepage/Newsletter";
 import Testimonials from "@/components/Homepage/Testimonials";
-import Image from "next/image";
+import { fetchAPI } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+    const featuredTools = await fetchAPI("/tools/featured");
+
   return (
-    <div className=" px-20">
-   <MainPage />
-   <InfoCards/>
-   <LatestAITools/>
-   <FeaturedNews/>
-   <CouponCode/>
-   <Testimonials />
-   <NewsletterSection/>
+    <div>
+      <MainPage />
+      <div className="px-20">
+        <LatestAITools tools={featuredTools}/>
+        <FeaturedNews />
+        <CouponCode />
+        <Testimonials />
+        <NewsletterSection />
+      </div>
     </div>
   );
 }

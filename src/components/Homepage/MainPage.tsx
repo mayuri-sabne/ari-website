@@ -3,71 +3,102 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import InfoCards from "./InfoCards"
 
 export default function MainPage() {
   return (
-    <main className="relative w-full flex flex-col items-center justify-center text-center px-6">
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl py-40">
-        {/* Heading */}
-        <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight mb-6 drop-shadow-lg">
-          Discover the Best AI Tools
-        </h1>
+    <>
+      <section
+        className="relative w-full bg-cover bg-center bg-no-repeat -mt-20 pt-20 px-20"
+        style={{ backgroundImage: "url('/homepage.png')" }}
+      >
 
-        {/* Subheading (new style) */}
-        <p className="text-md md:text-xl text-gray-700 dark:text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed font-light italic tracking-wide">
-          Explore guides, tools, and news to stay ahead in the AI revolution
-        </p>
+        <main className="relative w-full flex flex-col items-center justify-center text-center px-6">
 
-        {/* Search Box */}
-        <div className="w-full max-w-lg mb-10 mx-auto">
-          <Input
-            type="text"
-            placeholder="Search AI tools, guides or news..."
-            className="
-              w-full px-5 py-6 text-lg rounded-2xl shadow-lg 
-              bg-white/70 dark:bg-black/40
-              border border-gray-300 dark:border-gray-600
-              text-gray-900 dark:text-white
-              backdrop-blur-md
-              focus:outline-none focus:ring-2 focus:ring-[#1da27e]/60
-              transition-all duration-300
-              hover:shadow-[0_0_15px_rgba(29,162,126,0.25)]
-            "
-          />
-        </div>
+          <div className="relative z-10 max-w-5xl py-40">
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          {/* Gradient Button with Animated Glow */}
-          <Button
-            asChild
-            className="relative rounded-xl px-8 py-6 text-lg shadow-lg 
-                       bg-gradient-to-br from-green-400 to-blue-600 text-white
-                       hover:scale-105 transition-transform overflow-hidden
-                       animate-pulse-slow"
-          >
-            <Link href="/tools" className="relative z-10 font-semibold">
-              Explore AI Tools
-            </Link>
-          </Button>
+            <h1 className="text-5xl md:text-6xl font-extrabold 
+      text-gray-900 dark:text-white leading-tight mb-6 
+      tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.15)]">
+              Discover the Best AI Tools
+            </h1>
 
-          {/* Outline Button with Glow on Hover */}
-          <Button
-            asChild
-            className="rounded-xl px-8 py-6 text-lg shadow-md 
-                       border border-[#1da27e] text-[#1da27e] 
-                       bg-white hover:bg-[#f9fdfb] 
-                       dark:bg-black/40 dark:text-[#1da27e] dark:hover:bg-black/60
-                       hover:scale-105 transition-all duration-300
-                       hover:shadow-[0_0_15px_rgba(29,162,126,0.4)]"
-          >
-            <Link href="/deals">Get Latest Deals</Link>
-          </Button>
-        </div>
-      </div>
-    </main>
+            <p className="text-md md:text-xl text-gray-600 dark:text-gray-300 mb-12 
+      max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
+              Explore guides, tools, and the latest trends powering the future of AI.
+            </p>
+
+            <div className="w-full max-w-lg mb-10 mx-auto">
+              <Input
+                type="text"
+                placeholder="Search AI tools, guides or news..."
+                className="
+          w-full px-5 py-6 text-lg rounded-2xl shadow-md
+          
+          bg-white/80 dark:bg-white/10
+          border border-gray-200 dark:border-gray-700
+          backdrop-blur-md
+          
+          text-gray-900 dark:text-white
+          
+          focus:outline-none focus:ring-2 focus:ring-blue-400
+          hover:shadow-[0_0_18px_rgba(59,130,246,0.25)]
+          transition-all duration-300
+        "
+              />
+            </div>
+
+            {/* Button Row */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+
+              <Button
+                asChild
+                className="
+      relative rounded-xl px-10 py-6 text-lg font-semibold
+      text-white bg-[#0d111a]/80
+      backdrop-blur-xl
+
+      border border-transparent border-b-gray-600
+      shadow-[0_10px_25px_rgba(0,0,0,0.3)]
+
+      transition-all duration-300
+      hover:border hover:border-white
+      hover:bg-[#131a27]
+      hover:shadow-[0_12px_30px_rgba(255,255,255,0.15)]
+      hover:-translate-y-1 hover:scale-105
+
+      active:scale-95
+    "
+              >
+                <Link href="/tools">Explore AI Tools</Link>
+              </Button>
+
+
+              <Button
+                asChild
+                className="
+      relative rounded-xl px-10 py-6 text-lg font-semibold
+
+      border border-white text-white
+      bg-transparent backdrop-blur-xl
+
+      shadow-[0_8px_18px_rgba(255,255,255,0.1)]
+      transition-all duration-300
+
+      hover:bg-white hover:text-black hover:border-transparent
+      hover:shadow-[0_12px_30px_rgba(255,255,255,0.3)]
+      hover:-translate-y-1 hover:scale-105
+
+      active:scale-95
+    "
+              >
+                <Link href="/deals">Get Latest Deals</Link>
+              </Button>
+            </div>
+          </div>
+        </main>
+        <InfoCards />
+      </section>
+    </>
   )
 }
-
-

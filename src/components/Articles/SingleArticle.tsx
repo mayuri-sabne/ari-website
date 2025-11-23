@@ -1,11 +1,12 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
 
 const commentsData = [
   {
@@ -29,7 +30,7 @@ const commentsData = [
 ];
 
 export default function SingleArticle() {
-    const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("")
 
   const article = {
     category: "AI Technology",
@@ -50,11 +51,16 @@ export default function SingleArticle() {
 
       {/* Cover Image */}
       <div className="relative w-full h-72 md:h-96 rounded-xl overflow-hidden">
-        <img
+        <Image
           src={article.image}
           alt={article.title}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw,
+                 (max-width: 1200px) 100vw,
+                 100vw"
         />
+
         <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/80 dark:bg-black/60 text-gray-900 dark:text-gray-100 text-xs shadow">
           {article.category}
         </div>
@@ -63,90 +69,86 @@ export default function SingleArticle() {
       {/* Content */}
       <Card className="bg-white dark:bg-[#121826] shadow-lg">
         <CardContent className="flex flex-col space-y-6 p-6">
-          {/* Meta Info */}
           <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
             <span>{article.read}</span>
             <span>{article.date}</span>
           </div>
 
-          {/* Author */}
           <div className="text-sm text-gray-600 dark:text-gray-400">
             By {article.author}
           </div>
 
-          {/* Body / Description */}
           <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
             {article.desc}
           </p>
 
           <div className="space-y-4 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
             <p>
-              Machine learning in 2025 is evolving beyond simple predictive models. 
-              Organizations are now leveraging hybrid AI systems that integrate symbolic reasoning 
+              Machine learning in 2025 is evolving beyond simple predictive models.
+              Organizations are now leveraging hybrid AI systems that integrate symbolic reasoning
               with deep learning to achieve explainability and accuracy at scale.
             </p>
             <p>
-              Industries such as healthcare, supply chain, and fintech are adopting AI-driven 
-              automation to improve efficiency and personalization. At the same time, regulatory 
+              Industries such as healthcare, supply chain, and fintech are adopting AI-driven
+              automation to improve efficiency and personalization. At the same time, regulatory
               frameworks are being introduced to ensure ethical and responsible use of AI.
             </p>
             <p>
-              Looking forward, quantum machine learning and edge AI are poised to push the 
+              Looking forward, quantum machine learning and edge AI are poised to push the
               boundaries of what’s possible, making 2025 a landmark year in the evolution of AI.
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Comments Section Placeholder */}
+      {/* Comments */}
       <section className="bg-gray-100 dark:bg-gray-900 p-6 rounded-xl">
-      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-        Comments ({commentsData.length})
-      </h2>
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+          Comments ({commentsData.length})
+        </h2>
 
-      <div className="space-y-6 mb-8">
-        {commentsData.map((c) => (
-          <div key={c.id} className="flex items-start space-x-4">
-            <Avatar>
-              <AvatarImage src={c.avatar} />
-              <AvatarFallback>{c.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <p className="font-semibold text-gray-900 dark:text-white">{c.name}</p>
-                <span className="text-sm text-gray-500 dark:text-gray-400">{c.time}</span>
-              </div>
-              <p className="mt-1 text-gray-700 dark:text-gray-300">{c.comment}</p>
-              <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                <button className="hover:underline">👍 {c.likes}</button>
-                <button className="hover:underline">Reply</button>
+        <div className="space-y-6 mb-8">
+          {commentsData.map((c) => (
+            <div key={c.id} className="flex items-start space-x-4">
+              <Avatar>
+                <AvatarImage src={c.avatar} />
+                <AvatarFallback>{c.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-gray-900 dark:text-white">{c.name}</p>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{c.time}</span>
+                </div>
+                <p className="mt-1 text-gray-700 dark:text-gray-300">{c.comment}</p>
+                <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                  <button className="hover:underline">👍 {c.likes}</button>
+                  <button className="hover:underline">Reply</button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Add a Comment */}
-      <div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-          Add a Comment
-        </h3>
-        <Textarea
-          placeholder="Share your thoughts..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          className="mb-4 min-h-[100px]"
-        />
-        <Button
-          className={cn(
-            "text-white px-6 py-2 rounded-md transition-colors",
-            "bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
-          )}
-        >
-          Post Comment
-        </Button>
-      </div>
-    </section>
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            Add a Comment
+          </h3>
+          <Textarea
+            placeholder="Share your thoughts..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="mb-4 min-h-[100px]"
+          />
+          <Button
+            className={cn(
+              "text-white px-6 py-2 rounded-md transition-colors",
+              "bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
+            )}
+          >
+            Post Comment
+          </Button>
+        </div>
+      </section>
     </div>
-  )
+  );
 }

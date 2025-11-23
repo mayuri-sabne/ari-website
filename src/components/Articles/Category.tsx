@@ -33,31 +33,31 @@ export default function CategorySection() {
         {categories.map((cat, idx) => {
           const Icon = cat.icon;
           return (
-          <Card
-  key={idx}
-  className="group relative rounded-2xl border border-gray-200 dark:border-gray-700
+            <Card
+              key={idx}
+              className="group relative rounded-2xl border border-gray-200 dark:border-gray-700
              bg-white dark:bg-[#121826] shadow-sm transition-all duration-500 
              hover:scale-105 hover:shadow-xl
              hover:bg-gradient-to-br hover:from-[#d6fff2] hover:via-[#e0f2ff] hover:to-[#d6f5ff]
              dark:hover:from-[#102a43] dark:hover:via-[#184a6a] dark:hover:to-[#1a6f8f]"
->
-  <CardContent className="p-6 flex flex-col items-center space-y-3">
-    {/* Icon (keeps simple neutral bg) */}
-    <div className="flex items-center justify-center w-14 h-14 rounded-xl
+            >
+              <CardContent className="p-6 flex flex-col items-center space-y-3">
+                {/* Icon (keeps simple neutral bg) */}
+                <div className="flex items-center justify-center w-14 h-14 rounded-xl
                     bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200
                     transition-colors duration-500 group-hover:bg-white/70 group-hover:dark:bg-black/40">
-      <Icon className="w-7 h-7" />
-    </div>
+                  <Icon className="w-7 h-7" />
+                </div>
 
-    {/* Text */}
-    <h3 className="font-semibold text-gray-900 dark:text-white">
-      {cat.name}
-    </h3>
-    <p className="text-sm text-gray-600 dark:text-gray-400">
-      {cat.count} Articles
-    </p>
-  </CardContent>
-</Card>
+                {/* Text */}
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  {cat.name}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {cat.count} Articles
+                </p>
+              </CardContent>
+            </Card>
 
           );
         })}
