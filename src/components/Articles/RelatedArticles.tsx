@@ -9,7 +9,7 @@
 //       slug: "ml-2025-trends",
 //       title: "Top ML Trends in 2025",
 //       read: "6 min read",
-//       image: "/news.png",
+//       image: "/",
 //     },
 //     {
 //       slug: "ai-ethics-2025",

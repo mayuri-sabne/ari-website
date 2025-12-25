@@ -384,7 +384,7 @@ return (
     active:scale-[0.98]
   "
 >
-  <Link href="/tools">Explore AI Tools</Link>
+  <Link href="/ai-tools">Explore AI Tools</Link>
 </Button>
 <Button
   asChild
