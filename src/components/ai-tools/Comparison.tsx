@@ -555,7 +555,7 @@ export default function ComparisonLayout({ tool }: { tool: Tool }) {
     shadow-[0_14px_35px_rgba(59,130,246,0.12)]
 
     /* ---------- DARK MODE ---------- */
-    dark:bg-black
+    dark:bg-black/20
     dark:border-white/10
     dark:backdrop-blur
   "
