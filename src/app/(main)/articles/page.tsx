@@ -1,37 +1,101 @@
-import CategorySection from '@/components/Articles/Category'
-import LatestArticles from '@/components/Articles/LatestArticles'
-import React from 'react'
+import type { Metadata } from "next";
+import { fetchAPI } from "@/lib/api";
+import ArticlesClient from "@/components/Articles/ArticlesClient";
 
-// export const metadata = {
-//   title: 'Contact The Trusted Prop – Reach Out for Support, Partnerships, or Feedback',
-//   description: 'Have a question, feedback, or business inquiry? Contact The Trusted Prop team directly. We’re here to support traders, partners, and affiliate collaborators.',
-//   keywords: 'contact The Trusted Prop, reach out, prop firm support, affiliate inquiry, business proposal, customer care, trader help, feedback',
-//   openGraph: {
-//     title: 'Contact The Trusted Prop – Reach Out for Support, Partnerships, or Feedback',
-//     description: 'Have a question, feedback, or business inquiry? Contact The Trusted Prop team directly. We’re here to support traders, partners, and affiliate collaborators.',
-//     locale: 'en_US',
-//     images: [
-//       {
-//         url: `https://media.thetrustedprop.com/uploads/lotsize_Medium_93333bb1aa.png`,
-//         width: 1200,
-//         height: 630,
-//         alt: 'Free Prop Firm Giveaways Win $5K-$200K | The Trusted Prop'
-//       }
-//     ],
-//     url: 'https://www.thetrustedprop.com/free-giveaway',
-//     site_name: 'The Trusted Prop'
-//   }
-// }
+/* ---------------------------------------------------
+   Constants
+--------------------------------------------------- */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://aireviewinsider.com";
 
+const LOGO_URL = `${SITE_URL}/logo.png`;
 
-const articles = () => {
+/* ---------------------------------------------------
+   Metadata
+--------------------------------------------------- */
+export const metadata: Metadata = {
+  title: "Latest AI Articles, Guides & Insights | AI Review Insider",
+
+  description:
+    "Explore the latest AI articles, tutorials, insights, and expert-written guides from AI Review Insider. Stay updated on tools, trends, and AI best practices.",
+
+  keywords: [
+    "AI articles",
+    "AI insights",
+    "AI guides",
+    "AI tutorials",
+    "AI news",
+    "artificial intelligence blog",
+    "AI tools insights",
+    "Latest AI trends",
+    "AI Review Insider",
+  ],
+
+  alternates: {
+    canonical: `${SITE_URL}/articles`,
+  },
+
+  openGraph: {
+    title: "Latest AI Articles & Insights | AI Review Insider",
+    description:
+      "Read curated articles and insights on AI tools, trends, and best practices from AI Review Insider.",
+    url: `${SITE_URL}/articles`,
+    siteName: "AI Review Insider",
+    type: "website",
+    images: [
+      {
+        url: LOGO_URL,
+        width: 1200,
+        height: 630,
+        alt: "AI Articles – AI Review Insider",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Latest AI Articles & Insights | AI Review Insider",
+    description:
+      "Stay updated with AI articles, guides, and expert insights from AI Review Insider.",
+    images: [LOGO_URL],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+/* ---------------------------------------------------
+   Page
+--------------------------------------------------- */
+export default async function ArticlesPage() {
+  const categories = await fetchAPI("/categories");
+  const articles = await fetchAPI("/articles");
+
   return (
-     <div className=" px-20">
+    <div className="px-6 md:px-20 py-10 max-w-7xl mx-auto">
+      {/* CollectionPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "AI Articles",
+            description:
+              "Explore the latest AI insights, articles, and industry news from AI Review Insider.",
+            url: `${SITE_URL}/articles`,
+            isPartOf: {
+              "@type": "WebSite",
+              name: "AI Review Insider",
+              url: SITE_URL,
+            },
+          }),
+        }}
+      />
 
-        <CategorySection />
-        <LatestArticles/>
-        </div>
-    )
+      <ArticlesClient categories={categories} articles={articles} />
+    </div>
+  );
 }
-
-export default articles

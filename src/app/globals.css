@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "keen-slider/keen-slider.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -143,3 +144,24 @@
   }
 }
 
+@keyframes vertical-marquee {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.vertical-marquee {
+  animation: vertical-marquee linear infinite;
+}
+
+/* globals.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

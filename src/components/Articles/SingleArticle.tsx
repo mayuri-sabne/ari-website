@@ -1,154 +1,202 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useState } from "react"
-import { cn } from "@/lib/utils"
+import Image from "next/image";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-const commentsData = [
-  {
-    id: 1,
-    name: "Michael Chen",
-    time: "2 hours ago",
-    comment:
-      "Excellent article! The insights on AI's impact across different industries are spot-on. I've seen similar transformations in my field of work.",
-    likes: 12,
-    avatar: "/avatars/michael.png",
-  },
-  {
-    id: 2,
-    name: "Emily Rodriguez",
-    time: "5 hours ago",
-    comment:
-      "Great overview of AI's current state and future potential. Would love to see more specific examples of successful AI implementations in different industries.",
-    likes: 8,
-    avatar: "/avatars/emily.png",
-  },
-];
+type SingleArticleProps = {
+  article: any;
+};
 
-export default function SingleArticle() {
-  const [comment, setComment] = useState("")
+export default function SingleArticle({ article }: SingleArticleProps) {
+  const fullImage = article.thumbnail
+    ? `${process.env.NEXT_PUBLIC_UPLOADS_URL}${article.thumbnail}`
+    : "/default-article.jpg";
 
-  const article = {
-    category: "AI Technology",
-    read: "8 min read",
-    title: "The Evolution of Machine Learning: 2025 Trends",
-    desc: "Explore the latest developments in machine learning and how they're shaping the future of technology and business.",
-    author: "David Kumar",
-    date: "Aug 10, 2025",
-    image: "/news.png",
-  }
+      const profile = article.author.profileImage
+    ? `${process.env.NEXT_PUBLIC_UPLOADS_URL}${article.author.profileImage}`
+    : "/default-article.jpg";
+
+  const authorName = article.author?.name || "AI Review Editor";
+  const categoryName = article.category?.name || "General";
+  const publishedDate = article.createdAt
+    ? new Date(article.createdAt).toLocaleDateString()
+    : "";
+
+  const authorInitials = authorName
+    .split(" ")
+    .map((p: string) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 flex flex-col gap-8">
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-        {article.title}
-      </h1>
+<article className="max-w-4xl mx-auto py-8 space-y-8
+  text-slate-900 dark:text-slate-100">
+      {/* Top meta: category, title, author, date */}
+      <header className="space-y-4">
+      <div
+  className="
+    inline-flex items-center rounded-full px-3 py-1 text-xs font-medium backdrop-blur-md
+    border border-emerald-300/40
+    bg-emerald-50 text-emerald-700
 
-      {/* Cover Image */}
-      <div className="relative w-full h-72 md:h-96 rounded-xl overflow-hidden">
-        <Image
-          src={article.image}
-          alt={article.title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw,
-                 (max-width: 1200px) 100vw,
-                 100vw"
+    dark:border-white/10
+    dark:bg-white/5
+    dark:text-slate-100
+  "
+>
+  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 mr-2 dark:bg-emerald-400" />
+  {categoryName}
+</div>
+
+<h1 className="text-3xl md:text-5xl font-bold leading-tight
+  text-slate-900 dark:text-slate-50">
+  {article.title}
+</h1>
+
+
+<div className="flex flex-wrap items-center gap-4 text-sm
+  text-slate-600 dark:text-slate-300">
+
+  {/* Author */}
+  <Link
+    href={`/about-us/${article.author?.slug}`}
+    className="flex items-center gap-3 group"
+  >
+    {/* Avatar */}
+    <Avatar
+      className="
+        h-9 w-9 overflow-hidden
+        border border-slate-300
+        bg-white
+
+        dark:border-white/15
+        dark:bg-white/5
+        dark:backdrop-blur-md
+
+        transition
+        group-hover:ring-2 group-hover:ring-blue-500/40
+      "
+    >
+      {article.author?.profileImage ? (
+        <img
+          src={profile}
+          alt={authorName}
+          className="h-full w-full object-cover"
         />
+      ) : (
+        <AvatarFallback
+          className="
+            text-xs font-semibold
+            text-slate-700 bg-slate-200
+            dark:text-slate-100 dark:bg-slate-700
+          "
+        >
+          {authorInitials}
+        </AvatarFallback>
+      )}
+    </Avatar>
 
-        <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/80 dark:bg-black/60 text-gray-900 dark:text-gray-100 text-xs shadow">
-          {article.category}
+    {/* Name + Role */}
+    <div className="flex flex-col">
+      <span
+        className="
+          font-medium
+          text-slate-900
+          dark:text-slate-100
+          group-hover:text-blue-600 dark:group-hover:text-sky-400
+          transition
+        "
+      >
+        {authorName}
+      </span>
+
+      {article.author?.role && (
+        <span className="text-xs text-slate-500 dark:text-slate-400">
+          {article.author.role}
+        </span>
+      )}
+    </div>
+  </Link>
+
+  {/* Dot + date */}
+  {publishedDate && (
+    <>
+      <span className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-500" />
+      <span className="text-sm text-slate-500 dark:text-slate-300">
+        {publishedDate}
+      </span>
+    </>
+  )}
+</div>
+
+      </header>
+
+      {/* Banner image with glass frame */}
+<div
+  className="
+    relative w-full overflow-hidden rounded-3xl border
+    bg-white shadow-[0_18px_45px_rgba(15,23,42,0.15)]
+
+    dark:border-white/10
+    dark:bg-slate-900/60
+    dark:backdrop-blur-xl
+    dark:shadow-[0_18px_45px_rgba(15,23,42,0.7)]
+  "
+>
+        <div className="relative h-72 md:h-96 w-full">
+          <Image
+            src={fullImage}
+            alt={article.title}
+            fill
+            className="object-cover"
+          />
         </div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
-      {/* Content */}
-      <Card className="bg-white dark:bg-[#121826] shadow-lg">
-        <CardContent className="flex flex-col space-y-6 p-6">
-          <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-            <span>{article.read}</span>
-            <span>{article.date}</span>
-          </div>
+      {/* Content – single glassy container */}
+<section
+  className="
+    rounded-3xl border p-5 md:p-8
 
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            By {article.author}
-          </div>
+    /* LIGHT MODE */
+    bg-white
+    border-slate-200
+    shadow-[0_18px_45px_rgba(15,23,42,0.12)]
 
-          <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-            {article.desc}
-          </p>
+    /* DARK MODE */
+    dark:border-white/10
+    dark:bg-slate-900/70
+    dark:backdrop-blur-xl
+    dark:shadow-[0_18px_45px_rgba(15,23,42,0.65)]
+  "
+>
+    <div
+  className={cn(
+    "prose max-w-none",
 
-          <div className="space-y-4 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-            <p>
-              Machine learning in 2025 is evolving beyond simple predictive models.
-              Organizations are now leveraging hybrid AI systems that integrate symbolic reasoning
-              with deep learning to achieve explainability and accuracy at scale.
-            </p>
-            <p>
-              Industries such as healthcare, supply chain, and fintech are adopting AI-driven
-              automation to improve efficiency and personalization. At the same time, regulatory
-              frameworks are being introduced to ensure ethical and responsible use of AI.
-            </p>
-            <p>
-              Looking forward, quantum machine learning and edge AI are poised to push the
-              boundaries of what’s possible, making 2025 a landmark year in the evolution of AI.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+    /* LIGHT MODE */
+    "prose-headings:text-slate-900",
+    "prose-p:text-slate-700",
+    "prose-a:text-blue-600 hover:prose-a:text-blue-700",
+    "prose-strong:text-slate-900",
+    "prose-code:bg-slate-100 prose-code:text-slate-800",
+    "prose-img:rounded-2xl prose-img:shadow-lg",
 
-      {/* Comments */}
-      <section className="bg-gray-100 dark:bg-gray-900 p-6 rounded-xl">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-          Comments ({commentsData.length})
-        </h2>
+    /* DARK MODE */
+    "dark:prose-invert",
+    "dark:prose-headings:text-slate-50",
+    "dark:prose-p:text-slate-200",
+    "dark:prose-a:text-sky-400",
+    "dark:prose-strong:text-slate-50"
+  )}
+  dangerouslySetInnerHTML={{ __html: article.content }}
+/>
 
-        <div className="space-y-6 mb-8">
-          {commentsData.map((c) => (
-            <div key={c.id} className="flex items-start space-x-4">
-              <Avatar>
-                <AvatarImage src={c.avatar} />
-                <AvatarFallback>{c.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <p className="font-semibold text-gray-900 dark:text-white">{c.name}</p>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{c.time}</span>
-                </div>
-                <p className="mt-1 text-gray-700 dark:text-gray-300">{c.comment}</p>
-                <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                  <button className="hover:underline">👍 {c.likes}</button>
-                  <button className="hover:underline">Reply</button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-            Add a Comment
-          </h3>
-          <Textarea
-            placeholder="Share your thoughts..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className="mb-4 min-h-[100px]"
-          />
-          <Button
-            className={cn(
-              "text-white px-6 py-2 rounded-md transition-colors",
-              "bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
-            )}
-          >
-            Post Comment
-          </Button>
-        </div>
       </section>
-    </div>
+    </article>
   );
 }

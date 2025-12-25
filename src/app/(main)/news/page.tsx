@@ -1,37 +1,97 @@
-import CategorySection from '@/components/Articles/Category'
-import LatestArticles from '@/components/Articles/LatestArticles'
-import React from 'react'
+import type { Metadata } from "next";
+import { fetchAPI } from "@/lib/api";
+import NewsListClient from "@/components/News/NewsListClient";
 
-// export const metadata = {
-//   title: 'Contact The Trusted Prop – Reach Out for Support, Partnerships, or Feedback',
-//   description: 'Have a question, feedback, or business inquiry? Contact The Trusted Prop team directly. We’re here to support traders, partners, and affiliate collaborators.',
-//   keywords: 'contact The Trusted Prop, reach out, prop firm support, affiliate inquiry, business proposal, customer care, trader help, feedback',
-//   openGraph: {
-//     title: 'Contact The Trusted Prop – Reach Out for Support, Partnerships, or Feedback',
-//     description: 'Have a question, feedback, or business inquiry? Contact The Trusted Prop team directly. We’re here to support traders, partners, and affiliate collaborators.',
-//     locale: 'en_US',
-//     images: [
-//       {
-//         url: `https://media.thetrustedprop.com/uploads/lotsize_Medium_93333bb1aa.png`,
-//         width: 1200,
-//         height: 630,
-//         alt: 'Free Prop Firm Giveaways Win $5K-$200K | The Trusted Prop'
-//       }
-//     ],
-//     url: 'https://www.thetrustedprop.com/free-giveaway',
-//     site_name: 'The Trusted Prop'
-//   }
-// }
+/* ---------------------------------------------------
+   Constants
+--------------------------------------------------- */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://aireviewinsider.com";
 
+const LOGO_URL = `${SITE_URL}/logo.png`;
 
-const news = () => {
+/* ---------------------------------------------------
+   Metadata
+--------------------------------------------------- */
+export const metadata: Metadata = {
+  title: "AI News & Updates | AI Review Insider",
+
+  description:
+    "Read the latest AI news, industry updates, breakthroughs, and insights from AI Review Insider.",
+
+  keywords: [
+    "AI news",
+    "artificial intelligence updates",
+    "AI trends",
+    "AI industry news",
+    "machine learning news",
+    "AI Review Insider",
+  ],
+
+  alternates: {
+    canonical: `${SITE_URL}/news`,
+  },
+
+  openGraph: {
+    title: "AI News & Industry Updates | AI Review Insider",
+    description:
+      "Stay updated with the latest developments in AI, ML, automation, and more.",
+    url: `${SITE_URL}/news`,
+    siteName: "AI Review Insider",
+    type: "website",
+    images: [
+      {
+        url: LOGO_URL,
+        width: 1200,
+        height: 630,
+        alt: "AI News – AI Review Insider",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "AI News & Updates | AI Review Insider",
+    description:
+      "Stay updated with AI news, insights, and breakthroughs.",
+    images: [LOGO_URL],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+/* ---------------------------------------------------
+   Page
+--------------------------------------------------- */
+export default async function NewsPage() {
+  const news = await fetchAPI("/news"); // adjust backend route if needed
+
   return (
-     <div className=" px-20">
+    <div className="px-6 md:px-20 py-10 max-w-7xl mx-auto">
+      {/* CollectionPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "AI News",
+            description:
+              "Explore the latest news and insights from the AI industry.",
+            url: `${SITE_URL}/news`,
+            isPartOf: {
+              "@type": "WebSite",
+              name: "AI Review Insider",
+              url: SITE_URL,
+            },
+          }),
+        }}
+      />
 
-        <CategorySection />
-        <LatestArticles/>
-        </div>
-    )
+      <NewsListClient news={news} />
+    </div>
+  );
 }
-
-export default news

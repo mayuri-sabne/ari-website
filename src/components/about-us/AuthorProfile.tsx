@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Linkedin } from "lucide-react";
+import { Linkedin,Twitter } from "lucide-react";
 
 interface AuthorProps {
   name: string;
@@ -10,6 +10,7 @@ interface AuthorProps {
   areaOfExpertise?: string;
   roleAtARI?: string;
   linkedin?: string;
+  x?: string;
 }
 
 export default function AuthorProfile({
@@ -19,97 +20,231 @@ export default function AuthorProfile({
   areaOfExpertise,
   roleAtARI,
   linkedin,
+  x,
 }: AuthorProps) {
+  
   return (
-    <section className="max-w-5xl mx-auto px-6 py-20 relative">
+   <section className="relative max-w-5xl mx-auto px-6 py-20">
 
-      {/* Background Glow */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[70%] h-[70%]
-                        bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent
-                        blur-3xl opacity-40" />
+  {/* Background Glow */}
+  <div className="absolute inset-0 -z-10 pointer-events-none">
+    <div
+      className="
+        absolute top-20 left-1/2 -translate-x-1/2 
+        w-[85%] h-[70%]
+
+        /* LIGHT MODE */
+        bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.18),transparent_60%)]
+
+        /* DARK MODE */
+        dark:bg-[radial-gradient(circle_at_center,rgba(0,122,255,0.2),transparent_60%),
+                radial-gradient(circle_at_bottom,rgba(245,208,97,0.15),transparent_70%)]
+
+        blur-[120px] opacity-90
+      "
+    />
+  </div>
+
+<div
+  className="
+    rounded-3xl relative
+    px-7 md:px-10 py-10
+    backdrop-blur-2xl
+    border
+
+    /* LIGHT MODE */
+    bg-white/80
+    border-blue-200
+    text-slate-900
+    shadow-[0_20px_55px_rgba(59,130,246,0.18)]
+
+    /* DARK MODE */
+    dark:bg-transparent
+    dark:bg-gradient-to-br
+    dark:from-black/85
+    dark:via-gray-900/70
+    dark:to-black/90
+    dark:border-gray-700/60
+    dark:shadow-[0_0_45px_rgba(0,0,0,0.65)]
+    dark:text-[#E9ECF4]
+  "
+>
+
+    {/* Shine Layer */}
+    <div
+      className="
+        absolute inset-0 pointer-events-none rounded-3xl
+        bg-[linear-gradient(135deg,rgba(255,255,255,0.45),transparent_40%)]
+        dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.07),transparent_40%)]
+      "
+    />
+
+    <div className="relative flex flex-col lg:flex-row gap-10 items-center lg:items-start z-10">
+
+      {/* Avatar */}
+      <div className="relative flex-shrink-0">
+        <div
+          className="
+            absolute -inset-4 rounded-full
+            bg-[radial-gradient(circle_at_30%_0%,rgba(59,130,246,0.25),transparent_55%)]
+            dark:bg-[radial-gradient(circle_at_30%_0%,rgba(59,130,246,0.35),transparent_55%),
+                     radial-gradient(circle_at_80%_80%,rgba(245,208,97,0.35),transparent_55%)]
+            blur-2xl opacity-90
+          "
+        />
+
+        <div
+          className="
+            relative h-40 w-40 md:h-48 md:w-48
+            rounded-full overflow-hidden
+            border
+            shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+
+            /* LIGHT */
+            bg-white border-blue-200
+
+            /* DARK */
+            dark:bg-black/40 dark:border-gray-600
+            dark:shadow-[0_10px_35px_rgba(0,0,0,0.7)]
+          "
+        >
+          <Image
+            src={profileImage || "/default-author.png"}
+            alt={name}
+            fill
+            className="object-cover"
+            sizes="200px"
+          />
+        </div>
       </div>
 
-      {/* Glass Container */}
-      <div className="backdrop-blur-xl bg-white/50 dark:bg-gray-900/30 
-                      border border-white/20 dark:border-gray-700/30
-                      shadow-2xl rounded-3xl p-10">
+      {/* Content */}
+      <div className="flex-1 space-y-5 text-center lg:text-left">
 
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row items-center md:items-center gap-10">
+        {/* Tag */}
+        <div className="flex justify-center lg:justify-start">
+          <div
+            className="
+              inline-flex items-center gap-2 px-4 py-1.5
+              rounded-full text-xs font-medium tracking-wide
+              border backdrop-blur-md
 
-          {/* Image */}
-          <div className="flex-shrink-0">
-            <Image
-              src={profileImage || "/default-author.png"}
-              alt={name}
-              width={180}
-              height={180}
-              className="rounded-full border-4 border-white dark:border-gray-700 shadow-xl object-cover"
-            />
-          </div>
+              /* LIGHT */
+              bg-blue-50 border-blue-200 text-blue-700
 
-          {/* Name + Social */}
-          <div className="flex-1 text-center md:text-left space-y-3">
-
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-              {name}
-            </h1>
-
-            {linkedin && (
-              <a
-                href={linkedin}
-                target="_blank"
-                className="inline-flex items-center gap-2 px-5 py-2 
-                           border border-blue-500 text-blue-600 
-                           hover:bg-blue-600 hover:text-white 
-                           rounded-full transition-all text-sm font-medium"
-              >
-                <Linkedin className="w-5 h-5" />
-                Connect on LinkedIn
-              </a>
-            )}
+              /* DARK */
+              dark:bg-black/40 dark:border-gray-600 dark:text-white
+            "
+          >
+            <span className="h-2 w-2 rounded-full bg-blue-500 dark:bg-[#F5D061]" />
+            Author • AI Review Insider
           </div>
         </div>
 
-        {/* Description */}
-<div className="mt-16 md:mt-20 max-w-3xl mx-auto text-center md:text-left">
-  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-    {description || "This author has not added a bio yet."}
-  </p>
-</div>
+        {/* Name */}
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          {name}
+        </h1>
 
+        {/* Social */}
+        <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+          {linkedin && (
+            <a
+              href={linkedin}
+              target="_blank"
+              className="
+                inline-flex items-center gap-2 px-5 py-2.5
+                rounded-full text-sm font-medium transition
 
-        {/* Divider */}
-        <div className="mt-14 border-t border-gray-300/40 dark:border-gray-700/40"></div>
+                /* LIGHT */
+                bg-blue-600 text-white hover:bg-blue-700
 
-        {/* Bottom Grid */}
-        <div className="mt-12 grid md:grid-cols-2 gap-10">
+                /* DARK */
+                dark:bg-blue-100 dark:text-blue-900
+              "
+            >
+              <Linkedin className="w-4 h-4" />
+              LinkedIn
+            </a>
+          )}
+
+          {x && (
+            <a
+              href={x}
+              target="_blank"
+              className="
+                inline-flex items-center gap-2 px-5 py-2.5
+                rounded-full text-sm font-medium transition
+
+                /* LIGHT */
+                bg-slate-900 text-white hover:bg-black
+
+                /* DARK */
+                dark:bg-yellow-100 dark:text-yellow-900
+              "
+            >
+              <Twitter className="w-4 h-4" />
+              X
+            </a>
+          )}
+        </div>
+
+        {/* Bio */}
+        <p className="text-[15px] leading-relaxed text-slate-600 dark:text-gray-300">
+          {description || "This author has not added a bio yet."}
+        </p>
+
+        {/* Info Cards */}
+        <div className="grid md:grid-cols-2 gap-6">
 
           {/* Expertise */}
-          <div className="bg-white/40 dark:bg-gray-800/40 backdrop-blur-xl 
-                          rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 shadow-xl">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+          <div
+            className="
+              rounded-2xl p-5 border backdrop-blur-lg
+
+              /* LIGHT */
+              bg-white border-blue-200 shadow-[0_10px_30px_rgba(59,130,246,0.15)]
+
+              /* DARK */
+              dark:bg-black/40 dark:border-gray-700
+              dark:shadow-[0_10px_30px_rgba(0,0,0,0.45)]
+            "
+          >
+            <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-blue-500 dark:bg-[#F5D061]" />
               Areas of Expertise
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-gray-300">
               {areaOfExpertise ||
-                `${name} specializes in analyzing AI systems, researching tools, and delivering accurate insights in the AI ecosystem.`}
+                `${name} specializes in AI analysis, research, and tool intelligence.`}
             </p>
           </div>
 
           {/* Role */}
-          <div className="bg-white/40 dark:bg-gray-800/40 backdrop-blur-xl 
-                          rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 shadow-xl">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+          <div
+            className="
+              rounded-2xl p-5 border backdrop-blur-lg
+
+              /* LIGHT */
+              bg-white border-blue-200 shadow-[0_10px_30px_rgba(59,130,246,0.15)]
+
+              /* DARK */
+              dark:bg-black/40 dark:border-gray-700
+              dark:shadow-[0_10px_30px_rgba(0,0,0,0.45)]
+            "
+          >
+            <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-blue-500 dark:bg-[#F5D061]" />
               Role at ARI
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-gray-300 leading-relaxed">
               {roleAtARI || (
                 <>
-                  {name} contributes to our{" "}
-                  <span className="font-semibold">Editorial Review Standards</span>,
-                  ensuring tool evaluation accuracy, fact-checking, and research quality.
+                  {name} works on{" "}
+                  <span className="font-semibold text-blue-600 dark:text-[#F5D061]">
+                    content quality, AI evaluation, and editorial standards
+                  </span>
+                  , ensuring trusted research output.
                 </>
               )}
             </p>
@@ -117,6 +252,9 @@ export default function AuthorProfile({
 
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
   );
 }
