@@ -10,7 +10,7 @@ interface AuthorProps {
   areaOfExpertise?: string;
   roleAtARI?: string;
   linkedin?: string;
-  x?: string;
+  // x?: string;
 }
 
 export default function AuthorProfile({
@@ -20,7 +20,7 @@ export default function AuthorProfile({
   areaOfExpertise,
   roleAtARI,
   linkedin,
-  x,
+  // x,
 }: AuthorProps) {
   
   return (
@@ -168,25 +168,7 @@ export default function AuthorProfile({
             </a>
           )}
 
-          {x && (
-            <a
-              href={x}
-              target="_blank"
-              className="
-                inline-flex items-center gap-2 px-5 py-2.5
-                rounded-full text-sm font-medium transition
-
-                /* LIGHT */
-                bg-slate-900 text-white hover:bg-black
-
-                /* DARK */
-                dark:bg-yellow-100 dark:text-yellow-900
-              "
-            >
-              <Twitter className="w-4 h-4" />
-              X
-            </a>
-          )}
+        
         </div>
 
         {/* Bio */}

@@ -152,7 +152,6 @@ export default async function Page({ params }: PageProps) {
             url: `${SITE_URL}/about-us/${res.slug}`,
             sameAs: [
               res.linkedin,
-              res.x,
             ].filter(Boolean),
             worksFor: {
               "@type": "Organization",
@@ -175,7 +174,6 @@ export default async function Page({ params }: PageProps) {
         areaOfExpertise={res.areaOfExpertise}
         roleAtARI={res.roleAtARI}
         linkedin={res.linkedin}
-        x={res.x}
       />
     </>
   );

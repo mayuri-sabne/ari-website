@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { submitTool } from "@/lib/api";
+import { CheckCircle2, XCircle } from "lucide-react";
+
+type ToastType = "success" | "error" | "";
 
 export default function SubmitToolSection() {
   const [name, setName] = useState("");
@@ -10,32 +13,113 @@ export default function SubmitToolSection() {
   const [website, setWebsite] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
+const [toast, setToast] = useState<"success" | "error" | "">("");
+async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  setLoading(true);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setStatus("");
+  try {
+    await submitTool({ name, email, toolName, website, message });
+    setToast("success");
 
-    try {
-      await submitTool({ name, email, toolName, website, message });
-      setStatus("SUCCESS");
-
-      // Reset fields
-      setName("");
-      setEmail("");
-      setToolName("");
-      setWebsite("");
-      setMessage("");
-    } catch (error) {
-      setStatus("ERROR");
-    }
-
+    // reset fields
+    setName("");
+    setEmail("");
+    setToolName("");
+    setWebsite("");
+    setMessage("");
+  } catch (error) {
+    setToast("error");
+  } finally {
     setLoading(false);
+
+    setTimeout(() => {
+      setToast("");
+    }, 3000);
   }
+}
+
+useEffect(() => {
+  if (!toast) return;
+
+  const timer = setTimeout(() => setToast(""), 3000);
+  return () => clearTimeout(timer);
+}, [toast]);
 
   return (
-<section className="py-16">
+<section className="py-16 relative">
+{toast && (
+  <div
+    className={`
+      fixed z-50
+      transition-all duration-300
+      animate-in fade-in slide-in-from-top-4
+
+      /* 📱 Mobile: top center */
+      top-4 left-1/2 -translate-x-1/2
+
+      /* 🖥️ Desktop: bottom right */
+      max-[640px]:top-4
+      max-[640px]:left-1/2
+      max-[640px]:-translate-x-1/2
+
+      min-[641px]:bottom-6
+      min-[641px]:right-6
+      min-[641px]:left-auto
+      min-[641px]:top-auto
+      min-[641px]:translate-x-0
+
+      px-5 py-3
+      rounded-xl
+      text-sm font-medium
+      backdrop-blur-xl
+      border
+      shadow-[0_12px_40px_rgba(0,0,0,0.25)]
+
+      ${
+        toast === "success"
+          ? `
+            bg-green-600/15
+            border-green-400/40
+            text-green-100
+            dark:bg-green-500/10
+            dark:border-green-400/30
+          `
+          : `
+            bg-rose-600/15
+            border-rose-400/40
+            text-rose-100
+            dark:bg-rose-500/10
+            dark:border-rose-400/30
+          `
+      }
+    `}
+  >
+<div className="flex items-start gap-2">
+  {toast === "success" ? (
+    <CheckCircle2
+      size={16}
+      className="mt-0.5 text-green-400 shrink-0"
+      strokeWidth={2.2}
+    />
+  ) : (
+    <XCircle
+      size={16}
+      className="mt-0.5 text-rose-400 shrink-0"
+      strokeWidth={2.2}
+    />
+  )}
+
+  <span className="leading-relaxed text-sm break-words">
+    {toast === "success"
+      ? "Tool submitted successfully. Our team will review it shortly."
+      : "Submission failed. Please try again or contact support."}
+  </span>
+</div>
+
+  </div>
+)}
+
   <div
     className="
       mx-auto max-w-3xl rounded-3xl px-8 py-10 text-center space-y-6
@@ -228,18 +312,6 @@ export default function SubmitToolSection() {
         {loading ? "Submitting..." : "Submit Tool"}
       </button>
     </form>
-
-    {status === "SUCCESS" && (
-      <p className="text-green-500 dark:text-green-400 text-sm">
-        Tool submitted successfully!
-      </p>
-    )}
-
-    {status === "ERROR" && (
-      <p className="text-red-500 dark:text-red-400 text-sm">
-        Failed to submit tool.
-      </p>
-    )}
   </div>
 </section>
 

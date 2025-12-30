@@ -32,7 +32,7 @@ export default function SingleArticle({ article }: SingleArticleProps) {
     .toUpperCase();
 
   return (
-<article className="max-w-4xl mx-auto py-8 space-y-8
+<article className="max-w-4xl mx-auto py-2 sm:py-8 lg:py-8 space-y-8
   text-slate-900 dark:text-slate-100">
       {/* Top meta: category, title, author, date */}
       <header className="space-y-4">
@@ -134,27 +134,26 @@ export default function SingleArticle({ article }: SingleArticleProps) {
 
       </header>
 
-      {/* Banner image with glass frame */}
 <div
   className="
     relative w-full overflow-hidden rounded-3xl border
     bg-white shadow-[0_18px_45px_rgba(15,23,42,0.15)]
-
     dark:border-white/10
-    dark:bg-slate-900/60
     dark:backdrop-blur-xl
     dark:shadow-[0_18px_45px_rgba(15,23,42,0.7)]
   "
 >
-        <div className="relative h-72 md:h-96 w-full">
-          <Image
-            src={fullImage}
-            alt={article.title}
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+  <div className="relative h-40 sm:h-75 md:h-108 w-full">
+    <Image
+      src={fullImage}
+      alt={article.title}
+      fill
+      className="object-contain sm:object-cover"
+      priority
+    />
+  </div>
+
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
       {/* Content – single glassy container */}
@@ -174,25 +173,8 @@ export default function SingleArticle({ article }: SingleArticleProps) {
     dark:shadow-[0_18px_45px_rgba(15,23,42,0.65)]
   "
 >
-    <div
-  className={cn(
-    "prose max-w-none",
-
-    /* LIGHT MODE */
-    "prose-headings:text-slate-900",
-    "prose-p:text-slate-700",
-    "prose-a:text-blue-600 hover:prose-a:text-blue-700",
-    "prose-strong:text-slate-900",
-    "prose-code:bg-slate-100 prose-code:text-slate-800",
-    "prose-img:rounded-2xl prose-img:shadow-lg",
-
-    /* DARK MODE */
-    "dark:prose-invert",
-    "dark:prose-headings:text-slate-50",
-    "dark:prose-p:text-slate-200",
-    "dark:prose-a:text-sky-400",
-    "dark:prose-strong:text-slate-50"
-  )}
+  <div
+  className="article-content"
   dangerouslySetInnerHTML={{ __html: article.content }}
 />
 

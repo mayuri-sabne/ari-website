@@ -27,10 +27,10 @@ const team = [
 
 /* SOCIAL */
 const socials = [
-  { name: "LinkedIn", href: "#", label: "LinkedIn Page" },
-  { name: "Reddit", href: "#", label: "Reddit" },
-  { name: "Twitter", href: "#", label: "Twitter" },
-  { name: "Instagram", href: "#", label: "Instagram" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/aireviewinsider/", label: "LinkedIn" },
+  { name: "Reddit", href: "https://www.reddit.com/r/AiReviewInsiderHQ/", label: "Reddit" },
+  { name: "Twitter", href: "https://x.com/aireviewinsider", label: "Twitter" },
+  { name: "Instagram", href: "https://www.instagram.com/aireviewinsider", label: "Instagram" },
 ];
 
 /* ----------------------------- PAGE ----------------------------- */

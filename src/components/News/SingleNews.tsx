@@ -91,23 +91,7 @@ export default function SingleNews({ news }: { news: NewsItem }) {
 
   {/* Article Content */}
   <div
-    className="
-      relative z-10 prose max-w-none
-
-      /* DARK */
-      dark:prose-invert
-      dark:prose-headings:text-white
-      dark:prose-p:text-gray-300
-      dark:prose-strong:text-blue-300
-      dark:prose-a:text-blue-400
-
-      /* LIGHT */
-      prose-headings:text-slate-900
-      prose-p:text-slate-700
-      prose-strong:text-indigo-600
-      prose-a:text-indigo-600
-      prose-img:rounded-2xl prose-img:shadow-lg
-    "
+  className="article-content"
     dangerouslySetInnerHTML={{ __html: news.content }}
   />
 

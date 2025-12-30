@@ -49,7 +49,7 @@ export function Header() {
     bg-white/70 backdrop-blur-xl  shadow-[0_2px_20px_rgba(0,0,0,0.05)]
   `}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-8">
+        <div className="max-w-7xl gap-2 min-w-0 mx-auto flex items-center justify-between px-6 py-8">
 
           {/* Logo */}
           <div className="flex items-center">
@@ -64,7 +64,7 @@ export function Header() {
                 alt="AI Review Insider"
                 width={160}
                 height={48}
-                className="h-18 ml-[-10] w-auto object-contain block dark:hidden"
+                className="h-18 ml-[-10] xs:w-[130px]w-auto object-contain block dark:hidden"
                 priority
               />
 
@@ -74,7 +74,7 @@ export function Header() {
                 alt="AI Review Insider"
                 width={160}
                 height={48}
-                className="h-20 w-auto object-contain hidden dark:block"
+                className="h-20 w-auto xs:w-[130px] object-contain hidden dark:block"
                 priority
               />
             </Link>
@@ -157,6 +157,7 @@ export function Header() {
                 className="
   rounded-full px-6 py-2 font-semibold
   text-white
+  max-[400px]:px-4  max-[400px]:py-1.5  max-[400px]:text-sm
   bg-gradient-to-r from-blue-600 to-cyan-600
   shadow-[0_6px_20px_rgba(59,130,246,0.35)]
   transition-all duration-300
@@ -176,6 +177,7 @@ export function Header() {
                 className="
   rounded-full px-6 py-2 font-medium
   text-blue-700
+  max-[400px]:px-4  max-[400px]:py-1.5  max-[400px]:text-sm max-[400px]:mr-0 max-[400px]:ml-[-2]
   border border-blue-300
   bg-white
   transition-all duration-300
